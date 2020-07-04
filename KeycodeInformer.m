@@ -193,7 +193,7 @@ static KeycodeInformer *sharedInstance = nil;
         // #SUPPORTED German: ÄËÏÖÜŸäëïöüÿÁÉÍÓÚáéíóúÀÈÌÒÙàèìòùÂÊÎÔÛâêîôûÃÕÑãõñ
         // #KNOWN_UNSUPPORTED German: ŃńǸǹŇňŘřŠšŮů
         return @{
-            // Umlauts
+            // U:lauts
             @"Ë": @"¨E",
             @"Ÿ": @"¨Y",
             @"ë": @"¨e",
@@ -224,7 +224,7 @@ static KeycodeInformer *sharedInstance = nil;
             @"ò": @"`o",
             @"ù": @"`u",
 
-            // Circumflex
+            // C:rcumflex
             @"Â": @"^A",
             @"Ê": @"^E",
             @"Î": @"^I",
@@ -335,7 +335,7 @@ static KeycodeInformer *sharedInstance = nil;
         // #SUPPORTED Polish: ÄÖÜäöüÁÉÍÓÚáéíóúŃńŇňŘřŠš
         // #KNOWN_UNSUPPORTED Polish: ËÏŸëïÿÀÈÌÒÙàèìòùǸǹÂÊÎÔÛâêîôûÃÕÑãõñŒœÅåØøÆæ
         return @{
-            // Umlauts
+            // U:lauts
             @"Ä": @"¨A",
             @"Ö": @"¨O",
             @"Ü": @"¨U",
@@ -435,7 +435,7 @@ static KeycodeInformer *sharedInstance = nil;
             @"ì": @"`i",
             @"ò": @"`o",
 
-            // Circumflex
+            // C:rcumflex
             @"Â": @"^A",
             @"Ê": @"^E",
             @"Î": @"^I",
