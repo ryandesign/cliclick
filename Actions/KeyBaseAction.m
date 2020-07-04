@@ -29,6 +29,18 @@
 #import "KeyBaseAction.h"
 #import "ExecutionOptions.h"
 
+// Compatibility code for 10.5 and earlier
+#if MAC_OS_X_VERSION_MAX_ALLOWED < 1060 || MAC_OS_X_VERSION_MIN_REQUIRED < 1060
+@interface NSString (Support)
+- (NSComparisonResult)numericCompare:(NSString *)otherString;
+@end
+@implementation NSString (Support)
+- (NSComparisonResult)numericCompare:(NSString *)otherString {
+    return [self compare:otherString options:NSNumericSearch];
+}
+@end
+#endif
+
 @implementation KeyBaseAction
 
 + (NSDictionary *)getSupportedKeycodes {
@@ -39,9 +51,26 @@
 
 + (NSString *)getSupportedKeysIndentedWith:(NSString *)indent {
 
-    NSArray *sortedkeyNames = [[[[self class] getSupportedKeycodes] allKeys] sortedArrayUsingComparator:^(id obj1, id obj2) {
-        return [obj1 compare:obj2 options:NSNumericSearch];
-    }];
+    NSArray *allKeys = [[[self class] getSupportedKeycodes] allKeys];
+    NSArray *sortedkeyNames;
+#if MAC_OS_X_VERSION_MAX_ALLOWED >= 1060
+#if MAC_OS_X_VERSION_MIN_REQUIRED < 1060
+    if ([allKeys respondsToSelector:@selector(sortedArrayUsingComparator:)])
+#endif
+    {
+        sortedkeyNames = [allKeys sortedArrayUsingComparator:^(id obj1, id obj2) {
+            return [obj1 compare:obj2 options:NSNumericSearch];
+        }];
+    }
+#if MAC_OS_X_VERSION_MIN_REQUIRED < 1060
+    else
+#endif
+#endif
+#if MAC_OS_X_VERSION_MAX_ALLOWED < 1060 || MAC_OS_X_VERSION_MIN_REQUIRED < 1060
+    {
+        sortedkeyNames = [allKeys sortedArrayUsingSelector:@selector(numericCompare:)];
+    }
+#endif
 
     return [NSString stringWithFormat:@"%@%@", indent, [sortedkeyNames componentsJoinedByString:[@"\n" stringByAppendingString:indent]]];
 }
